@@ -9,6 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 .run(function($ionicPlatform, pushService) {
     $ionicPlatform.ready(function() {
+        //Intialize and listen to push notifications
         pushService.pushNotification();
 
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
