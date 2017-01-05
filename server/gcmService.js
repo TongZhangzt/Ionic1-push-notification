@@ -8,6 +8,7 @@ var gcm = require('node-gcm');
 var app = express();
 var apiKey = "AAAA7AbHQo0:APA91bGkqtyOZiYJKMKGQepD_4cWG5tUgbqZRGqAjipCqc3kTTkLDobbIsVpdlhT4cQ3yMzdRlitLPwyK0biTO_4YLQhFdEXoL97YXHhLpNDPNe4-KiUkNxQC0iMfciORhGPdV1y-xfri_gbXjJznWCKzpqS7wt-ng";
 
+
 //Set up the server
 var server = app.listen(3000, function() {
     console.log('server is just fine!');
@@ -45,7 +46,6 @@ app.get('/push', function(req, res) {
     var retry_times = 4;
 
     //Define the message
-
     //The title will be shown in the notification center
     message.addData('title', 'Hello, World');
 
@@ -54,13 +54,15 @@ app.get('/push', function(req, res) {
     //Add action buttons, set the foreground property to true the app will be brought to the front
     //if foreground is false then the callback is run without the app being brought to the foreground.
     message.addData('actions', [
-        { "icon": "accept", "title": "Accept", "callback": "app.accept", "foreground": true },
-        { "icon": "reject", "title": "Reject", "callback": "app.reject", "foreground": false },
+        { "icon": "accept", "title": "Accept", "callback": "window.accept", "foreground": true },
+        { "icon": "reject", "title": "Reject", "callback": "window.reject", "foreground": false },
     ]);
 
-    //Set content-available = 1, the on('notification') event handler will be called even app running in background or closed
+    //Set content-available = 1, the on('notification') event handler will be called
+    //even app running in background or closed
     message.addData('content-available', '1');
 
+    //Give every message a unique id
     message.addData('id', Math.random());
 
     //priority can be: -2: minimum, -1: low, 0: default , 1: high, 2: maximum priority.
@@ -68,9 +70,11 @@ app.get('/push', function(req, res) {
     //This priority value determines where the push notification will be put in the notification shade.
     message.addData('priority', 1);
 
-
+    message.addData('style', 'inbox');
+    message.addData('summaryText', 'There are %n% notifications');
 
     //Here get the devices from your database into an array
+    //var deviceID = "dX24xnORlQ8:APA91bG4M-81_0k06MHSK5nD5QyPX46yKC-XgB26fwU-RJudSX1Eh9FqW0EoHc0BoeRZ7KVRUdVFtO9fq3JONiZtn880NTDIulvVJraBDx8Cyx2v-CM0pW-mrBTV8Pq2jGnTTdvcczx7";
     var deviceID = "fAdLEoSduZc:APA91bFMcfSREvSsRUnCaDk7lt6RlRWSTpaeqvRyMp8AnScrdBAxeWThVctAhbyDIQde_e84XhuJ9b7P2r67M0aayssJM2iMdqsChDvrcdR1shv3_d37IpYm1IsLr9nKlq7qBW1iRCg1";
     service.send(message, { registrationTokens: [deviceID] }, retry_times, function(err, response) {
         if (err)

@@ -1,26 +1,23 @@
-(function(){
-    angular.module('starter')
-    .service('saveTokenService', ['$http', '$q', '$ionicLoading',  saveTokenService]);
-
-    function saveTokenService($http, $q, $ionicLoading){
+angular.module('saveTokenService', [])
+    .service('saveTokenService', function($http, $q, $ionicLoading) {
 
         var base_url = 'http://localhost:3000';
 
-        function register(device_token){
+        function register(device_token) {
 
             var deferred = $q.defer();
             $ionicLoading.show();
 
-           /* $http.post(base_url + '/register', {'device_token': device_token})
-                .success(function(response){
+            /* $http.post(base_url + '/register', {'device_token': device_token})
+                 .success(function(response){
 
-                    $ionicLoading.hide();
-                    deferred.resolve(response);
+                     $ionicLoading.hide();
+                     deferred.resolve(response);
 
-                })
-                .error(function(data){
-                    deferred.reject();
-                });*/
+                 })
+                 .error(function(data){
+                     deferred.reject();
+                 });*/
 
             console.log("Send the token to the server");
 
@@ -34,5 +31,4 @@
         return {
             register: register
         };
-    }
-})();
+    });
