@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'pushService'])
 
-.run(function($ionicPlatform, $ionicPopup, pushService) {
+.run(function($ionicPlatform, pushService) {
     $ionicPlatform.ready(function() {
         pushService.pushNotification();
 

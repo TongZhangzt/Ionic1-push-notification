@@ -1,5 +1,7 @@
 angular.module('pushService', ['ionic', 'saveTokenService'])
-    .service('pushService', function($ionicPlatform, $ionicPopup, saveTokenService) {
+    .service('pushService', function($ionicPlatform, $ionicPopup, saveTokenService, $rootScope) {
+        var NotificationContent;
+
         var pushNotification = function() {
             $ionicPlatform.ready(function() {
                 // After the platform is ready and our plugins are available
@@ -36,6 +38,10 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
 
                 push.on('notification', function(data) {
                     console.log('message', data.message);
+
+                    //Broadcast the notification here
+                    $rootScope.$broadcast('New Medicine', data.message);
+
                     //Define the callback function when app is open in the foreground
                     if (data.additionalData.foreground) {
                         /**
@@ -93,6 +99,15 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
         };
 
         return {
-            pushNotification: pushNotification
+            pushNotification: pushNotification,
+            NotificationContent: NotificationContent
         };
+    })
+
+.controller('pushController', ['$scope', 'pushService', function($scope, pushService) {
+    $scope.$on('New Medicine', function(event, data) {
+        //add a div in index.html to print the data
+        $scope.test = data;
+        console.log('New Message', data);
     });
+}]);

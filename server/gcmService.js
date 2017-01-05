@@ -75,7 +75,8 @@ app.get('/push', function(req, res) {
 
     //Here get the devices from your database into an array
     //var deviceID = "dX24xnORlQ8:APA91bG4M-81_0k06MHSK5nD5QyPX46yKC-XgB26fwU-RJudSX1Eh9FqW0EoHc0BoeRZ7KVRUdVFtO9fq3JONiZtn880NTDIulvVJraBDx8Cyx2v-CM0pW-mrBTV8Pq2jGnTTdvcczx7";
-    var deviceID = "fAdLEoSduZc:APA91bFMcfSREvSsRUnCaDk7lt6RlRWSTpaeqvRyMp8AnScrdBAxeWThVctAhbyDIQde_e84XhuJ9b7P2r67M0aayssJM2iMdqsChDvrcdR1shv3_d37IpYm1IsLr9nKlq7qBW1iRCg1";
+    var deviceID = "casMhf5V7tM:APA91bEEHDIzYkOcmbnkh7NVKMAWYPDy2Ugpd9Oq_rPUs_xnW-rhrV0RMoZ7kLrQzZXh91VZn7BQKdkbdSMtJRgBbfMRkZfFGT3FCCKa1C_O1iHikBxX98V9H4WKYAmbU5PPMLw6qUvD";
+    //var deviceID = "fAdLEoSduZc:APA91bFMcfSREvSsRUnCaDk7lt6RlRWSTpaeqvRyMp8AnScrdBAxeWThVctAhbyDIQde_e84XhuJ9b7P2r67M0aayssJM2iMdqsChDvrcdR1shv3_d37IpYm1IsLr9nKlq7qBW1iRCg1";
     service.send(message, { registrationTokens: [deviceID] }, retry_times, function(err, response) {
         if (err)
             console.error(err);
