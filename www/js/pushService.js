@@ -7,13 +7,33 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                 var push = PushNotification.init({
                     android: {
                         //senderId of your project on FCM
-                        senderID: "1013726003853"
+                        senderID: "1024972771000"
                     },
                     ios: {
+                        //senderId of your project on FCM
+                        senderID: "1024972771000",
                         //Whether you allow alert, badge/ alert/ sound
                         alert: "true",
                         badge: "true",
-                        sound: "true"
+                        sound: "true",
+                        gcmSandbox: "true",
+                        //Define the buttons of notification:
+                        categories: {
+                            'invite': {
+                                'yes': {
+                                    'callback': window.accept,
+                                    'title': 'Accept',
+                                    'foreground': true,
+                                    'destructive': false
+                                },
+                                'no': {
+                                    'callback': window.reject,
+                                    'title': 'Reject',
+                                    'foreground': false,
+                                    'destructive': false
+                                }
+                            }
+                        }
                     },
                     windows: {}
                 });
@@ -31,7 +51,6 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                         saveTokenService.register(data.registrationId);
                     }
                     console.log(window.localStorage.getItem('registrationId'));
-                    saveTokenService.register(data.registrationId);
                 })
 
                 push.on('notification', function(data) {
@@ -64,8 +83,8 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                         //when a push notification is tapped on *AND* the app is in background
                         var pastPushSavedID = window.localStorage.getItem("pastPushSavedID");
 
-                        if (data.additionalData.id !== pastPushSavedID) {
-                            window.localStorage.setItem("pastPushSavedID", data.additionalData.id);
+                        if (data.additionalData.notID !== pastPushSavedID) {
+                            window.localStorage.setItem("pastPushSavedID", data.additionalData.notID);
                             $ionicPopup.show({
                                 title: 'Background Notification',
                                 template: data.message,
@@ -83,6 +102,13 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                             console.log("Push notification clicked");
                         }
                     }
+
+                    // Call finish function to let the  OSknow the notification is done
+                    push.finish(function() {
+                        console.log("processing of push data is finished");
+                    }, function() {
+                        console.log("something went wrong with push.finish for ID = " + data.additionalData.notId)
+                    }, data.additionalData.notId);
                 });
 
                 //Define the callback function of action buttons here.
@@ -105,7 +131,7 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
     $scope.$on('New Medicine', function(event, data) {
         //add a div in index.html to print the data
         $scope
-.test = data;
+            .test = data;
         console.log('New Message', data);
     });
 }]);
