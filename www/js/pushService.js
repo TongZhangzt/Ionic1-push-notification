@@ -83,8 +83,8 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                         //when a push notification is tapped on *AND* the app is in background
                         var pastPushSavedID = window.localStorage.getItem("pastPushSavedID");
 
-                        if (data.additionalData.notID !== pastPushSavedID) {
-                            window.localStorage.setItem("pastPushSavedID", data.additionalData.notID);
+                        if (data.additionalData.notId !== pastPushSavedID) {
+                            window.localStorage.setItem("pastPushSavedID", data.additionalData.notId);
                             $ionicPopup.show({
                                 title: 'Background Notification',
                                 template: data.message,

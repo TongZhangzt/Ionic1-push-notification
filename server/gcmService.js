@@ -61,7 +61,7 @@ app.get('/push', function(req, res) {
     message_Android.addData('content-available', '1');
 
     //Give every message a unique id
-    message_Android.addData('notID', Math.random()*100);
+    message_Android.addData('notId', Math.random()*100);
 
     //priority can be: -2: minimum, -1: low, 0: default , 1: high, 2: maximum priority.
     //Set priority will inform the user on the screen even though in the background or close the app.
@@ -78,10 +78,10 @@ app.get('/push', function(req, res) {
         contentAvailable: true,
         notification: {
             title: "Hello, World",
-            body: "This is a notification that will be displayed ASAP.",
+            body: 'This is a notification that will be displayed ASAP.',
             'click-action': 'invite'
         },
-        notID: Math.random()*100
+        notId: Math.random()*100
     });
 
     //Here get the devices from your database into an array
