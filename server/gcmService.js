@@ -61,7 +61,7 @@ app.get('/push', function(req, res) {
     message_Android.addData('content-available', '1');
 
     //Give every message a unique id
-    message_Android.addData('notId', Math.random()*100);
+    message_Android.addData('notId', Math.random() * 100);
 
     //priority can be: -2: minimum, -1: low, 0: default , 1: high, 2: maximum priority.
     //Set priority will inform the user on the screen even though in the background or close the app.
@@ -81,7 +81,7 @@ app.get('/push', function(req, res) {
             body: 'This is a notification that will be displayed ASAP.',
             'click-action': 'invite'
         },
-        notId: Math.random()*100
+        notId: Math.random() * 100
     });
 
     //Here get the devices from your database into an array
@@ -89,13 +89,13 @@ app.get('/push', function(req, res) {
     var deviceID_IOS = "nsYXPLefO3s:APA91bGupqWTTOzZ84axpJq3TKq9gWyv9w7zNaro_LIKFA1rG60YM_otECWBZnNTft5UKy__3FRLQY_IXVbmLhqKJCf6oCrfRZwWOXSn0GzKSyUFn7-KChjXFHZ70u0tHa95I3RoVoPH";
 
     /**** Send Notifications to Android devices   *****/
-        service.send(message_Android, { registrationTokens: [deviceID_Android] }, retry_times, function(err, response) {
-            if (err)
-                console.error(err);
-            else
-                console.log(response);
-        });
-
+/*    service.send(message_Android, { registrationTokens: [deviceID_Android] }, retry_times, function(err, response) {
+        if (err)
+            console.error(err);
+        else
+            console.log(response);
+    });
+*/
     /**** Send Notifications to IOS devices   *****/
     service.send(message_IOS, { registrationTokens: [deviceID_IOS] }, retry_times, function(err, response) {
         if (err)
