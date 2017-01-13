@@ -1,39 +1,24 @@
-angular.module('pushService', ['ionic', 'saveTokenService'])
-    .service('pushService', function($ionicPlatform, $ionicPopup, saveTokenService, $rootScope) {
-        var pushNotification = function() {
+angular.module('pushModule', ['ionic', 'saveTokenService'])
+    .service('pushService', function($ionicPlatform, $ionicPopup, saveTokenService, pushProvider, $rootScope) {
+        this.pushNotification = function() {
             $ionicPlatform.ready(function() {
                 // After the platform is ready and our plugins are available
                 //Intialize push service
                 var push = PushNotification.init({
                     android: {
                         //senderId of your project on FCM
-                        senderID: "1024972771000"
+                        senderID: pushProvider.senderID
                     },
                     ios: {
                         //senderId of your project on FCM
-                        senderID: "1024972771000",
+                        senderID: pushProvider.senderID,
                         //Whether you allow alert, badge/ alert/ sound
-                        alert: "true",
-                        badge: "true",
-                        sound: "true",
-                        gcmSandbox: "true",
+                        alert: pushProvider.ios_alert,
+                        badge: pushProvider.ios_badge,
+                        sound: pushProvider.ios_sound,
+                        gcmSandbox: 'true',
                         //Define the buttons of notification:
-                        categories: {
-                            'invite': {
-                                'yes': {
-                                    'callback': window.accept,
-                                    'title': 'Accept',
-                                    'foreground': true,
-                                    'destructive': false
-                                },
-                                'no': {
-                                    'callback': window.reject,
-                                    'title': 'Reject',
-                                    'foreground': false,
-                                    'destructive': false
-                                }
-                            }
-                        }
+                        categories: pushProvider.ios_categories
                     },
                     windows: {}
                 });
@@ -54,8 +39,6 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                 })
 
                 push.on('notification', function(data) {
-                    console.log('message', data.message);
-
                     //Broadcast the notification here
                     $rootScope.$broadcast('New Medicine', data.message);
 
@@ -99,7 +82,6 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                                     }
                                 }]
                             });
-                            console.log("Push notification clicked");
                         }
                     }
 
@@ -121,17 +103,51 @@ angular.module('pushService', ['ionic', 'saveTokenService'])
                 }
             });
         };
-
-        return {
-            pushNotification: pushNotification
-        };
     })
 
-.controller('pushController', ['$scope', 'pushService', function($scope, pushService) {
+.provider('pushProvider', function() {
+    this.parameters = {
+        ios_alert: true,
+        ios_badge: true,
+        ios_sound: true,
+        ios_categories: {
+            'invite': {
+                'yes': {
+                    'callback': window.accept,
+                    'title': 'Accept',
+                    'foreground': true,
+                    'destructive': false
+                },
+                'no': {
+                    'callback': window.reject,
+                    'title': 'Reject',
+                    'foreground': false,
+                    'destructive': false
+                }
+            }
+        }
+    };
+
+    this.setParameters = function(parameters) {
+        this.parameters = angular.merge(this.parameters, parameters);
+    }
+
+    this.$get = function() {
+        var self = this;
+        return {
+            senderID: self.parameters.senderID,
+            alert: self.parameters.ios_alert,
+            badge: self.parameters.ios_badge,
+            sound: self.parameters.ios_sound,
+            categories: self.parameters.ios_categories
+        }
+    }
+})
+
+.controller('pushController', ['$scope', 'pushService', function($scope) {
     $scope.$on('New Medicine', function(event, data) {
         //add a div in index.html to print the data
-        $scope
-            .test = data;
-        console.log('New Message', data);
+        $scope.test = data;
+        console.log('Brocast New Message', data);
     });
 }]);

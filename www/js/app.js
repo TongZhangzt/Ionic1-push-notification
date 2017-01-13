@@ -5,9 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'pushService'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'pushModule'])
 
-.run(function($ionicPlatform, pushService) {
+//Set the parameters for pushProviders, you must at least provide the senderID
+.config(function(pushProviderProvider){
+    pushProviderProvider.setParameters({senderID:1024972771000});
+})
+
+.run(function($ionicPlatform, pushService, pushProvider) {
     $ionicPlatform.ready(function() {
         //Intialize and listen to push notifications
         pushService.pushNotification();

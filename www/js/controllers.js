@@ -1,6 +1,11 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['pushModule'])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', ['$scope', 'pushService', function($scope) {
+    $scope.$on('New Medicine', function(event, data) {
+        //add a div in index.html to print the data
+        $scope.test = data;
+    });
+}])
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

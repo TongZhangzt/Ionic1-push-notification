@@ -89,18 +89,18 @@ app.get('/push', function(req, res) {
     var deviceID_IOS = "nsYXPLefO3s:APA91bGupqWTTOzZ84axpJq3TKq9gWyv9w7zNaro_LIKFA1rG60YM_otECWBZnNTft5UKy__3FRLQY_IXVbmLhqKJCf6oCrfRZwWOXSn0GzKSyUFn7-KChjXFHZ70u0tHa95I3RoVoPH";
 
     /**** Send Notifications to Android devices   *****/
-/*    service.send(message_Android, { registrationTokens: [deviceID_Android] }, retry_times, function(err, response) {
+    service.send(message_Android, { registrationTokens: [deviceID_Android] }, retry_times, function(err, response) {
         if (err)
             console.error(err);
         else
             console.log(response);
     });
-*/
+
     /**** Send Notifications to IOS devices   *****/
-    service.send(message_IOS, { registrationTokens: [deviceID_IOS] }, retry_times, function(err, response) {
+/*    service.send(message_IOS, { registrationTokens: [deviceID_IOS] }, retry_times, function(err, response) {
         if (err)
             console.error(err);
         else
             console.log(response);
-    });
+    });*/
 });
