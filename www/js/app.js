@@ -12,7 +12,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     pushProviderProvider.setParameters({senderID:1024972771000});
 })
 
-.run(function($ionicPlatform, pushService, pushProvider) {
+.run(function($ionicPlatform, pushService) {
     $ionicPlatform.ready(function() {
         //Intialize and listen to push notifications
         pushService.pushNotification();
