@@ -1,9 +1,8 @@
-angular.module('saveTokenService', [])
+angular.module('saveTokenModule', [])
     .service('saveTokenService', function($http, $q, $ionicLoading) {
-
         var base_url = 'http://localhost:3000';
 
-        function register(device_token) {
+        this.register = function(device_token) {
 
             var deferred = $q.defer();
             $ionicLoading.show();
@@ -23,12 +22,6 @@ angular.module('saveTokenService', [])
 
             $ionicLoading.hide();
 
-            //return deferred.promise;
             return;
-        };
-
-
-        return {
-            register: register
         };
     });

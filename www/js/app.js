@@ -8,15 +8,12 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'pushModule'])
 
 //Set the parameters for pushProviders, you must at least provide the senderID
-.config(function(pushProviderProvider){
-    pushProviderProvider.setParameters({senderID:1024972771000});
+.config(function(pushProviderProvider) {
+    pushProviderProvider.setParameters({ senderID: 1024972771000 });
 })
 
-.run(function($ionicPlatform, pushService) {
+.run(function($ionicPlatform, pushProvider) {
     $ionicPlatform.ready(function() {
-        //Intialize and listen to push notifications
-        pushService.pushNotification();
-
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
@@ -38,7 +35,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $stateProvider
 
     // setup an abstract state for the tabs directive
-        .state('tab', {
+    .state('tab', {
         url: '/tab',
         abstract: true,
         templateUrl: 'templates/tabs.html'
@@ -87,5 +84,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');
-
 });

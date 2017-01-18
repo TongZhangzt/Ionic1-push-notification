@@ -1,6 +1,6 @@
-angular.module('starter.controllers', ['pushModule'])
+angular.module('starter.controllers', [])
 
-.controller('DashCtrl', ['$scope', 'pushService', function($scope) {
+.controller('DashCtrl', ['$scope', function($scope) {
     $scope.$on('New Medicine', function(event, data) {
         //add a div in index.html to print the data
         $scope.test = data;
