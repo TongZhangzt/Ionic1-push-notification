@@ -1,5 +1,5 @@
 angular.module('pushModule', ['ionic', 'saveTokenModule'])
-    .provider('pushProvider', function() {
+    .provider('PushService', function() {
         var self = this;
 
         //Set the default values of parameters
