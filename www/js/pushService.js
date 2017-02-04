@@ -70,7 +70,7 @@ angular.module('pushModule', ['ionic', 'saveTokenModule'])
 
                 push.on('notification', function(data) {
                     //Broadcast the notification here
-                    $rootScope.$broadcast('New Medicine', data.message);
+                    $rootScope.$broadcast('onPushNotification', data.additionalData.data, data);
 
                     //Define the callback function when app is open in the foreground
                     if (data.additionalData.foreground) {
@@ -96,7 +96,7 @@ angular.module('pushModule', ['ionic', 'saveTokenModule'])
                         //when a push notification is tapped on *AND* the app is in background
                         var pastPushSavedID = window.localStorage.getItem("pastPushSavedID");
 
-                        if (data.additionalData.notId !== pastPushSavedID) {
+
                             window.localStorage.setItem("pastPushSavedID", data.additionalData.notId);
                             $ionicPopup.show({
                                 title: 'Background Notification',
@@ -112,7 +112,7 @@ angular.module('pushModule', ['ionic', 'saveTokenModule'])
                                     }
                                 }]
                             });
-                        }
+
                     }
 
                     // Call finish function to let the  OSknow the notification is done
@@ -136,9 +136,12 @@ angular.module('pushModule', ['ionic', 'saveTokenModule'])
     })
 
 .controller('pushController', ['$scope', function($scope) {
-    $scope.$on('New Medicine', function(event, data) {
+    $scope.$on('onPushNotification', function(event, data, dataObj) {
         //add a div in index.html to print the data
         $scope.test = data;
-        console.log('Brocast New Message', data);
+        console.log('Brocast New Message', dataObj);
     });
 }]);
+
+
+

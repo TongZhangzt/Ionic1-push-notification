@@ -1,9 +1,10 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', ['$scope', function($scope) {
-    $scope.$on('New Medicine', function(event, data) {
+    $scope.$on('onPushNotification', function(event, data, dataObj) {
         //add a div in index.html to print the data
-        $scope.test = data;
+        $scope.test = dataObj;
+        console.log('Brocast New Message', data);
     });
 }])
 
