@@ -10,7 +10,7 @@ $ cd Ionic1-push-notification
 $ npm install</pre>
 
 * Install Phonegap Plugin, set you sender id
-<pre>$ Cordova pulgin add phonegap-plugin-push --variable SENDER_ID="xxxxxx"</pre>
+<pre>$ Cordova plugin add phonegap-plugin-push --variable SENDER_ID="xxxxxx"</pre>
 
 * Replace sender_id in app.js
 
